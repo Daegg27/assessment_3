@@ -1,0 +1,31 @@
+body {
+    background-color: #FFD700;
+}
+
+#main-navbar {
+    background-color: #8B8000;
+    position: sticky;
+}
+
+.headerOption {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.headerOption:hover {
+    color: pink;
+}
+
+#the-team {
+    height: 300px;
+    width: 200px;
+}
+
+.imageHolder {
+    text-align: center;
+}
+
+#title {
+    padding-left: 15px;
+}
