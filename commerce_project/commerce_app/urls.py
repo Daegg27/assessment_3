@@ -7,5 +7,7 @@ urlpatterns = [
     path('living/', views.living_room),
     path('kitchen/', views.kitchen),
     path('bathroom/', views.bathroom),
-    path('bedroom/', views.bedroom)
+    path('bedroom/', views.bedroom),
+    path('search/', views.search),
+    path('cart/', views.cart)
 ] 
