@@ -29,3 +29,7 @@ body {
 #title {
     padding-left: 15px;
 }
+
+.sub-page-header {
+    text-align: center;
+}
