@@ -1,5 +1,19 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>This will show all the bedroom furniture</h1>
+<div class="py-5"></div>
+<h1 class="sub-page-header">Bedroom Appliances</h1>
+<div class="py-2"></div>
+<div class="row">
+    {% for item in bedroom_appliances %}
+    <div class="col-sm-4 imageHolder"><img src="{{ item.display_image }}" alt="Something is wrong">
+        <h2>{{item.name}}</h2>
+        <h3>${{item.price}}</h3>
+        <h4>Quantity: {{item.quantity}}</h4>
+        <form action="">
+            <button class="cart-button">Add to Cart</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

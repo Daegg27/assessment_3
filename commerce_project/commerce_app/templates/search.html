@@ -1,5 +1,21 @@
 {% extends 'layout.html' %}
 
+{% block head-content}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}
+
 {% block content %}
-<h1>This will allow you to search for items</h1>
+<div class="py-4"></div>
+<h1 class="sub-page-header">What item are you looking for?</h1>
+<div class="py-1"></div>
+<form class="sub-page-header" onsubmit="">
+    <input type="text" placeholder="Item name">
+</form>
+<div class="py-4"></div>
+<div class="row">
+    <div class="col-sm-6 shadow-lg">
+        <p>We can't guarantee you that we've got what you need. But I promise we can show you a picture of exactly what you want. That's the Finest Goods guarantee.</p>
+    </div>
+    <div class="col-sm-6 imageHolder"><img id="the-team" src="https://xen.com.au/wp-content/uploads/useless-useful.jpg" alt="Wouldn't you like to know"></div>
+</div>
 {% endblock %}
