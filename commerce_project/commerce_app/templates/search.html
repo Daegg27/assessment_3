@@ -2,7 +2,7 @@
 
 {% block head-content %}
 {% load static %}
-<script src="{% static 'javascript/app.js' %}"></script> 
+<script src="{% static 'javascript/app.js' %}" defer></script> 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 {% endblock %}
 
@@ -10,7 +10,7 @@
 <div class="py-4"></div>
 <h1 class="sub-page-header">What item are you looking for?</h1>
 <div class="py-1"></div>
-<form class="sub-page-header" onsubmit="findItem(event)">
+<form id="search-form" class="sub-page-header">
     <input id="search-value" type="text" placeholder="Item name">
     <button type="submit">Submit</button>
 </form>

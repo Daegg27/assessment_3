@@ -11,13 +11,21 @@
 
 // }
 
-document.getElementById('search-value').addEventListener('submit', (event) => {
+document.getElementById('search-form').addEventListener('submit', (event) => {
     
     event.preventDefault()
 
-    const inquiry = document.getElementById('search-value').value
+    const searchInput = document.getElementById('search-value')
+    
+    document.getElementById('search-result').innerHTML = ''
 
-    console.log(inquiry)
+    axios.get('/commerce/products', {params: {query: searchInput.value}}).then((response) => {
+        console.log('response?', response)
+        let newImage = document.createElement('img')
+        newImage.src = response.data.image_url
+        document.getElementById('search-result').appendChild(newImage)
+    })
 
+    searchInput.value = ''
 
 })

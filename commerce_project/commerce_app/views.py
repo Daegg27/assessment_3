@@ -5,6 +5,7 @@ from django.shortcuts import render
 from urllib import response
 import requests as HTTP_Client
 from requests_oauthlib import OAuth1
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 
 
@@ -192,3 +193,21 @@ def search(request):
 def cart(request):
 
     return render(request, 'cart.html')
+
+def products(request):
+    
+
+    # print(request.GET.get('query'))
+    query = request.GET.get('query')
+
+    auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
+    endpoint = f"http://api.thenounproject.com/icon/{query}"
+
+    response = HTTP_Client.get(endpoint, auth=auth)
+    responseJSON = response.json()
+
+    image_url = responseJSON['icon']['preview_url']
+    
+
+
+    return JsonResponse({'image_url': image_url})
