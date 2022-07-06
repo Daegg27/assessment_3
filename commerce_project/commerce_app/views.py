@@ -1,13 +1,15 @@
 from http.client import responses
 import json
 import re
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from urllib import response
 import requests as HTTP_Client
 from requests_oauthlib import OAuth1
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
 
 user_interactions = [
      
@@ -73,6 +75,12 @@ user_interactions = [
         'quantity': 3,
         'price': 119.99,
         'display_image': "https://static.thenounproject.com/png/416-200.png"
+    },
+    {
+        'tag': 'cart',
+        'items_ordered': {},
+        'order_cost': 0,
+        'quantity': 0
     }
 ]
 
@@ -86,26 +94,9 @@ def index(request):
 
 def living_room(request):
 
-    auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
 
     living_appliances = []
 
-    # for i in range(0, 3): 
-    #     endpoint = f"http://api.thenounproject.com/icon/{user_interactions[i]['name']}"
-    #     response = HTTP_Client.get(endpoint, auth=auth)
-    #     responseJSON = response.json()
-    #     display_images.append(responseJSON['icon']['preview_url'])
-    # print(display_images)
-
-
-    # for item in user_interactions: ////////////////////////THIS IS THE REAL METHOD I WILL USE
-    #     if item['tag'] == 'living':
-    #         endpoint = f"http://api.thenounproject.com/icon/{item['name']}"
-    #         response = HTTP_Client.get(endpoint, auth=auth)
-    #         responseJSON = response.json()
-    #         item['display_image'] = responseJSON['icon']['preview_url']
-    #         living_appliances.append(item) # Easily lets me know which items need to actually be shown on this page
-    # print(living_appliances)
 
     for item in user_interactions:
         if item['tag'] == 'living':
@@ -120,18 +111,9 @@ def living_room(request):
 
 def kitchen(request):
 
-    auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
 
     kitchen_appliances = []
 
-    # for item in user_interactions: #////////////////////////THIS IS THE REAL METHOD I WILL USE
-    #     if item['tag'] == 'kitchen':
-    #         endpoint = f"http://api.thenounproject.com/icon/{item['name']}"
-    #         response = HTTP_Client.get(endpoint, auth=auth)
-    #         responseJSON = response.json()
-    #         item['display_image'] = responseJSON['icon']['preview_url']
-    #         kitchen_appliances.append(item) # Easily lets me know which items need to actually be shown on this page
-    # print(kitchen_appliances)
 
     for item in user_interactions:
         if item['tag'] == 'kitchen':
@@ -145,18 +127,8 @@ def kitchen(request):
 
 def bedroom(request):
 
-    auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
 
     bedroom_appliances = []
-
-    # for item in user_interactions: #////////////////////////THIS IS THE REAL METHOD I WILL USE
-    #     if item['tag'] == 'bedroom':
-    #         endpoint = f"http://api.thenounproject.com/icon/{item['name']}"
-    #         response = HTTP_Client.get(endpoint, auth=auth)
-    #         responseJSON = response.json()
-    #         item['display_image'] = responseJSON['icon']['preview_url']
-    #         bedroom_appliances.append(item) # Easily lets me know which items need to actually be shown on this page
-    # print(bedroom_appliances)
 
     for item in user_interactions:
         if item['tag'] == 'bedroom':
@@ -173,22 +145,6 @@ def search(request):
 
     return render(request, 'search.html')
 
-# def show_me_items(request):
-#     if request.method == 'POST':
-#         # print(request.POST)
-#         # print(request.body)
-#         body = json.loads(request.body)
-#         # content = body['content']
-#         print(body)
-#         item_name = body['itemName']
-
-#         auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
-#         endpoint = f"http://api.thenounproject.com/icon/{item_name}"
-
-#         response = HTTP_Client.get(endpoint, auth=auth)
-#         responseJSON = response.json()
-
-#         print(responseJSON)
 
 def cart(request):
 
@@ -200,7 +156,13 @@ def products(request):
     # print(request.GET.get('query'))
     query = request.GET.get('query')
 
-    auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
+    for items in user_interactions:
+        if query.upper() == items['name'].upper():
+            # return redirect('/commerce/') # Couldn't get this to work, tried multiple methods
+            return None
+
+
+    auth = OAuth1(os.environ['API_KEY'], os.environ['SECRET'])
     endpoint = f"http://api.thenounproject.com/icon/{query}"
 
     response = HTTP_Client.get(endpoint, auth=auth)
