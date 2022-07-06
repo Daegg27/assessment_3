@@ -172,6 +172,23 @@ def search(request):
 
     return render(request, 'search.html')
 
+# def show_me_items(request):
+#     if request.method == 'POST':
+#         # print(request.POST)
+#         # print(request.body)
+#         body = json.loads(request.body)
+#         # content = body['content']
+#         print(body)
+#         item_name = body['itemName']
+
+#         auth = OAuth1("8bab92f001234e7ebcedf97e9281e439", "af62b1cff2154c6f84fc99610bc5002a")
+#         endpoint = f"http://api.thenounproject.com/icon/{item_name}"
+
+#         response = HTTP_Client.get(endpoint, auth=auth)
+#         responseJSON = response.json()
+
+#         print(responseJSON)
+
 def cart(request):
 
     return render(request, 'cart.html')

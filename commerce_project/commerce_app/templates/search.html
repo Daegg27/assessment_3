@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
-{% block head-content}
+{% block head-content %}
+{% load static %}
+<script src="{% static 'javascript/app.js' %}"></script> 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 {% endblock %}
 
@@ -8,10 +10,11 @@
 <div class="py-4"></div>
 <h1 class="sub-page-header">What item are you looking for?</h1>
 <div class="py-1"></div>
-<form class="sub-page-header" onsubmit="">
-    <input type="text" placeholder="Item name">
+<form class="sub-page-header" onsubmit="findItem(event)">
+    <input id="search-value" type="text" placeholder="Item name">
+    <button type="submit">Submit</button>
 </form>
-<div class="py-4"></div>
+<div id="search-result" class="py-4 sub-page-header"></div>
 <div class="row">
     <div class="col-sm-6 shadow-lg">
         <p>We can't guarantee you that we've got what you need. But I promise we can show you a picture of exactly what you want. That's the Finest Goods guarantee.</p>
