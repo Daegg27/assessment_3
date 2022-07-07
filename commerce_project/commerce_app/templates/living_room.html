@@ -1,5 +1,12 @@
 {% extends 'layout.html' %}
 
+{% block head-content %}
+{% load static %}
+<script src="{% static 'javascript/purchase.js' %}" defer></script> 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}
+
+
 {% block content %}
 <div class="py-5"></div>
 <h1 class="sub-page-header">Living Room Appliances</h1>
@@ -9,9 +16,8 @@
     <div class="col-sm-4 imageHolder"><img src="{{ item.display_image }}" alt="Something is wrong">
         <h2>{{item.name}}</h2>
         <h3>${{item.price}}</h3>
-        <h4>Quantity: {{item.quantity}}</h4>
-        <form action="">
-            <button class="cart-button">Add to Cart</button>
+        <form>
+            <button name="{{item.name}}" class="cart-button" onclick="getName(event)">Add to Cart</button>
         </form>
     </div>
     {% endfor %}

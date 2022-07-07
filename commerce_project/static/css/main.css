@@ -33,3 +33,10 @@ body {
 .sub-page-header {
     text-align: center;
 }
+
+#cart-background {
+    text-align: center;
+    background-color: white;
+    position: relative;
+    right: 15px;
+}

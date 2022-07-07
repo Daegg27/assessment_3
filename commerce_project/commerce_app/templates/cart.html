@@ -1,5 +1,23 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>This will show everything that the customer has ordered</h1>
+<div class="py-5"></div>
+<marquee>Thanks for shopping with Finest Goods! Come back soon!</marquee>
+<hr>
+<h1 class="sub-page-header">Shopping Cart</h1>
+<div>
+    <div class="row">
+        <div class="col-sm-5"></div>
+        <div id="cart-background" class="col-sm-2">
+            <h2>Items:</h2>
+            {% for name in item_names %}
+            <h3>{{ name }}</h3>
+            {% endfor %}
+            <hr>
+            <h4>Order Cost: ${{price}}</h4>
+            <h5>Quantity: {{quantity}}</h5>
+        </div>
+        <div class="col-sm-5"></div>
+    </div>
+</div>
 {% endblock %}

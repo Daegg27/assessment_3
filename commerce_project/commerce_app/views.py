@@ -16,69 +16,61 @@ user_interactions = [
      {
         'tag': 'living',
         'name': 'Couch',
-        'quantity': 5,
         'price': 75.99,
         'display_image': "https://static.thenounproject.com/png/10737-200.png"
     },
     {
         'tag': 'living',
         'name': 'Table',
-        'quantity': 3,
         'price': 29.99,
         'display_image': "https://static.thenounproject.com/png/1392-200.png"
     },
     {
         'tag': 'living',
         'name': 'Bookshelf',
-        'quantity': 7,
         'price': 59.99,
         'display_image': "https://static.thenounproject.com/png/19087-200.png"
     },
     {
         'tag': 'kitchen',
         'name': 'Refrigerator',
-        'quantity': 4,
         'price': 119.99,
         'display_image': "https://static.thenounproject.com/png/1859-200.png"
     },
     {
         'tag': 'kitchen',
         'name': 'Sink',
-        'quantity': 2,
         'price': 49.99,
         'display_image': "https://static.thenounproject.com/png/7581-200.png"
     },
     {
         'tag': 'kitchen',
         'name': 'Microwave',
-        'quantity': 6,
         'price': 34.99,
         'display_image': "https://static.thenounproject.com/png/10744-200.png"
     },
     {
         'tag': 'bedroom',
         'name': 'Bed',
-        'quantity': 1,
         'price': 149.99,
         'display_image': "https://static.thenounproject.com/png/1072-200.png"
     },
     {
         'tag': 'bedroom',
         'name': 'Drawer',
-        'quantity': 4,
         'price': 49.99,
         'display_image': "https://static.thenounproject.com/png/23609-200.png"
     },
     {
         'tag': 'bedroom',
         'name': 'Television',
-        'quantity': 3,
         'price': 119.99,
         'display_image': "https://static.thenounproject.com/png/416-200.png"
     },
     {
         'tag': 'cart',
-        'items_ordered': {},
+        'name': 'username',
+        'items_ordered': [],
         'order_cost': 0,
         'quantity': 0
     }
@@ -98,9 +90,9 @@ def living_room(request):
     living_appliances = []
 
 
-    for item in user_interactions:
+    for item in user_interactions:  
         if item['tag'] == 'living':
-            living_appliances.append(item)
+            living_appliances.append(item) # Found this to be a good way to consolidate and keep it simple and uniformed throughout the program. 
 
     my_data = {
         'living_appliances': living_appliances
@@ -148,17 +140,29 @@ def search(request):
 
 def cart(request):
 
-    return render(request, 'cart.html')
+
+    item_names = user_interactions[9]['items_ordered']
+    price = round(user_interactions[9]['order_cost'], 2)
+    quantity = user_interactions[9]['quantity']
+    
+
+
+
+    my_data = {
+        'item_names': item_names,
+        'price': price,
+        'quantity': quantity
+    }
+
+    return render(request, 'cart.html', my_data)
 
 def products(request):
     
-
-    # print(request.GET.get('query'))
     query = request.GET.get('query')
 
     for items in user_interactions:
         if query.upper() == items['name'].upper():
-            # return redirect('/commerce/') # Couldn't get this to work, tried multiple methods
+            # return redirect('/commerce/') # Couldn't get this to work, tried multiple methods, wanted to redirect to the corresponding page if the item was found
             return None
 
 
@@ -173,3 +177,25 @@ def products(request):
 
 
     return JsonResponse({'image_url': image_url})
+
+def purchase(request):
+    
+    itemName = request.GET.get('itemName')
+
+    for items in user_interactions: # Finds the cost of the item added.
+        if items['name'] == itemName:
+            item_cost = items['price']
+            break # There shouldn't be any duplicate items, but just a safety measure
+    
+
+    for items in user_interactions: # This will actually add each item to the cart 
+        if items['tag'] == 'cart':
+            items['items_ordered'].append(itemName)
+            items['order_cost'] += item_cost
+            items['quantity'] += 1
+    # print(user_interactions[9])
+
+
+
+
+    return JsonResponse({'itemName': itemName})
